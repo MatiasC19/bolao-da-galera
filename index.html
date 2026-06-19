@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bolão da Galera · Copa 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -50,6 +52,14 @@ header{position:sticky;top:0;z-index:100;
 .logo-badge svg{width:20px;height:20px}
 .logo-words strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;color:#0033A0;line-height:1}
 .logo-words small{font-size:8px;font-weight:700;letter-spacing:3px;color:#CC0000;text-transform:uppercase}
+.sync-pill{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:5px 10px;border-radius:20px;flex-shrink:0}
+.sync-pill.online{background:rgba(10,127,68,.09);color:var(--green);border:1px solid rgba(10,127,68,.18)}
+.sync-pill.offline{background:rgba(204,0,0,.07);color:var(--red);border:1px solid rgba(204,0,0,.15)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.sync-pill.online .sync-dot{animation:pulseDot 2s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-pill .sync-lbl{display:none}
+@media(min-width:480px){.sync-pill .sync-lbl{display:inline}}
 .nav{display:flex;gap:2px;background:rgba(0,51,160,.07);border-radius:11px;padding:3px;margin-left:auto}
 .nb{display:flex;align-items:center;gap:5px;padding:7px 13px;border:none;background:transparent;
   border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
@@ -486,6 +496,9 @@ header{position:sticky;top:0;z-index:100;
       <span class="nb-lbl">Admin</span>
     </button>
   </nav>
+  <span class="sync-pill offline" id="sync-pill">
+    <span class="sync-dot"></span><span class="sync-lbl" id="sync-lbl">Conectando…</span>
+  </span>
 </div>
 </header>
 
@@ -683,10 +696,58 @@ const TEAMS=[
 
 const ADMIN_PW='copa123';
 const AVC=['#0033A0','#CC0000','#0a7f44','#b8922a','#7c3aed','#0891b2','#db2777','#ea580c','#0f766e','#b45309'];
-let ST=JSON.parse(localStorage.getItem('bolao26v4')||'null')||{players:[],matches:[],bets:{}};
-let adminOn=false;
 
-function save(){localStorage.setItem('bolao26v4',JSON.stringify(ST))}
+// ══ FIREBASE — shared realtime data for everyone with the link ══════════
+const firebaseConfig = {
+  apiKey: "AIzaSyBmLCPfNsgBSleNupMBuD_5N79rd-HatJE",
+  authDomain: "bolao-da-galera-9b949.firebaseapp.com",
+  databaseURL: "https://bolao-da-galera-9b949-default-rtdb.firebaseio.com",
+  projectId: "bolao-da-galera-9b949",
+  storageBucket: "bolao-da-galera-9b949.firebasestorage.app",
+  messagingSenderId: "775781086844",
+  appId: "1:775781086844:web:21828f96fd7a5623353bf9"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const dataRef = db.ref('bolao');
+
+let ST={players:[],matches:[],bets:{}};
+let adminOn=false;
+let firebaseReady=false;
+
+function setSyncStatus(online){
+  const pill=document.getElementById('sync-pill');
+  const lbl=document.getElementById('sync-lbl');
+  if(!pill)return;
+  pill.className='sync-pill '+(online?'online':'offline');
+  lbl.textContent=online?'Sincronizado':'Conectando…';
+}
+
+// live listener — any change anyone makes is pushed to everyone instantly
+dataRef.on('value', (snapshot)=>{
+  const val=snapshot.val();
+  ST = val ? {
+    players: val.players || [],
+    matches: val.matches || [],
+    bets: val.bets || {}
+  } : {players:[],matches:[],bets:{}};
+  firebaseReady=true;
+  setSyncStatus(true);
+  render();
+}, (error)=>{
+  console.error('Firebase error:', error);
+  setSyncStatus(false);
+  toast('Erro de conexão com o servidor','err');
+});
+
+function save(){
+  // pushes the current in-memory state to Firebase; the onValue listener
+  // above will then re-render for this tab AND every other tab/device
+  dataRef.set(ST).catch(err=>{
+    console.error('Save error:', err);
+    toast('Erro ao salvar — verifique sua conexão','err');
+  });
+}
 
 // custom confirm modal (native confirm() can be blocked in some webviews)
 let _confirmCb=null;
@@ -1047,8 +1108,8 @@ function confirmBet(){
 // ── INIT ─────────────────────────────────────────────────
 chkAccess();
 fillSelects();
-render();
-setInterval(render,60000);
+// initial render() happens automatically once dataRef.on('value', ...) fires above
+setInterval(render,60000); // keeps "Prazo encerrado" status fresh even with no new data
 </script>
 </body>
 </html>
