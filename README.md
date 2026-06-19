@@ -2,7 +2,9 @@
 
 Site para organizar o bolão da Copa do Mundo FIFA 2026 entre amigos. Cada pessoa entra, escolhe os jogos e registra o palpite de placar exato. Quem acerta o placar exato leva o prêmio daquele jogo.
 
-🔗 **Link do site:** será preenchido após ativar o GitHub Pages (veja seção "Como publicar" abaixo)
+🔗 **Link do site:** [matiasc19.github.io/bolao-da-galera](https://matiasc19.github.io/bolao-da-galera/)
+
+> Se o link ainda não estiver no ar, veja a seção "Como publicar" abaixo — leva 1 minuto para ativar.
 
 ---
 
@@ -31,7 +33,7 @@ O site já vem com as 48 seleções participantes da Copa do Mundo 2026 (sede: E
 
 Projeto 100% estático — um único arquivo `index.html` com HTML, CSS e JavaScript puro (sem frameworks, sem backend, sem build). Os dados (jogos, palpites, participantes) são salvos no `localStorage` do navegador de quem acessa.
 
-> **Importante:** como os dados ficam salvos localmente em cada navegador, os palpites registrados por uma pessoa só aparecem para ela mesma até que o GitHub Pages esteja servindo a mesma versão pra todo mundo acessar pelo mesmo link. Para um bolão real entre amigos, o ideal é todos acessarem sempre pelo mesmo link publicado (veja abaixo), e mantar o navegador sem limpar o cache/dados do site durante a Copa.
+> **Importante:** como os dados ficam salvos localmente em cada navegador, os palpites registrados por uma pessoa só aparecem para ela mesma. Para um bolão real entre amigos, o ideal é todos acessarem sempre pelo mesmo link publicado (veja abaixo), e manter o navegador sem limpar o cache/dados do site durante a Copa.
 
 ## 🚀 Como publicar (GitHub Pages)
 
@@ -41,7 +43,7 @@ Este repositório já está pronto para o GitHub Pages. Para ativar:
 2. Em "Source", selecione a branch **main** e a pasta **/ (root)**
 3. Clique em **Save**
 4. Em cerca de 1 minuto, o site estará disponível em:
-   `https://matiasc19.github.io/Bol-o_da_Galera/`
+   `https://matiasc19.github.io/bolao-da-galera/`
 
 Esse é o link que você compartilha com seus amigos.
 
