@@ -82,18 +82,17 @@ header{position:sticky;top:0;z-index:100;
 
 /* HERO */
 .hero{border-radius:var(--r20);overflow:hidden;position:relative;
-  background:linear-gradient(125deg,#002776 0%,#009C3B 50%,#FFDF00 100%);
+  background:
+    linear-gradient(125deg, rgba(0,10,40,.88) 0%, rgba(0,20,60,.65) 45%, rgba(0,40,20,.55) 100%),
+    url('https://images.unsplash.com/photo-1511204579483-e5c2b1d69acd?w=1200&q=70&fm=jpg&fit=crop&auto=format') center 38%/cover no-repeat,
+    linear-gradient(125deg,#002776 0%,#009C3B 100%);
   padding:1.25rem 1.5rem}
 .hero::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 75% 30%, rgba(255,255,255,.10), transparent 55%),
-  url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='36' fill='none' stroke='rgba(255,255,255,.06)' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='24' fill='none' stroke='rgba(255,255,255,.04)' stroke-width='1'/%3E%3C/svg%3E")}
-.hero-tag{font-size:8px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:.25rem}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:2px;color:white;line-height:1.05;margin-bottom:.375rem}
+  background:radial-gradient(circle at 75% 20%, rgba(255,223,0,.10), transparent 55%)}
+.hero-tag{font-size:8px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:.25rem;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:2px;color:white;line-height:1.05;margin-bottom:.375rem;text-shadow:0 2px 8px rgba(0,0,0,.45)}
 .hero-title span{color:#FFDF00}
-.hero-hosts{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
-.hpill{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
-  border-radius:16px;padding:3px 9px;font-size:10px;font-weight:500;color:rgba(255,255,255,.85)}
-.hpill img{width:15px;height:10px;border-radius:2px;object-fit:cover}
+.hero-sub{font-size:12px;font-weight:500;color:rgba(255,255,255,.88);margin-top:.5rem;text-shadow:0 1px 4px rgba(0,0,0,.5)}
 .hero-glyph{position:absolute;right:1rem;top:50%;transform:translateY(-50%);
   font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,7vw,60px);
   color:rgba(255,255,255,.06);line-height:1;pointer-events:none;user-select:none}
@@ -277,7 +276,24 @@ header{position:sticky;top:0;z-index:100;
 .modal-vs{font-family:'Bebas Neue',sans-serif;font-size:18px;color:rgba(255,255,255,.7);letter-spacing:2px}
 .modal-body{padding:1.5rem}
 .modal-lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.625rem;text-align:center}
-.modal-score-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:1.25rem}
+.modal-score-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:.625rem}
+
+/* quantity stepper for multiple bets */
+.qty-row{display:flex;align-items:center;justify-content:center;gap:1.25rem;margin-bottom:1.125rem}
+.qty-btn{width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(0,51,160,.2);background:rgba(0,51,160,.04);
+  color:var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+.qty-btn svg{width:16px;height:16px}
+.qty-btn:hover{background:rgba(0,51,160,.1);transform:scale(1.05)}
+.qty-btn:active{transform:scale(0.95)}
+.qty-display{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--ink);min-width:40px;text-align:center}
+
+/* one score-entry row per bet when quantity > 1 */
+.score-entry-row{display:flex;align-items:center;gap:10px;background:rgba(0,51,160,.03);border:1px solid rgba(0,51,160,.1);
+  border-radius:14px;padding:.625rem .75rem}
+.score-entry-num{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--blue);background:rgba(0,51,160,.08);
+  width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.score-entry-row .modal-si{width:56px;height:56px;font-size:26px;border-radius:14px}
+.score-entry-row .modal-sep{font-size:22px}
 .modal-si{width:72px;height:72px;border:2px solid rgba(0,51,160,.18);border-radius:18px;
   background:rgba(0,51,160,.04);font-family:'Bebas Neue',sans-serif;font-size:38px;text-align:center;
   color:var(--blue);outline:none;transition:all .15s}
@@ -314,6 +330,12 @@ header{position:sticky;top:0;z-index:100;
 .t-exact{background:rgba(201,168,76,.16);color:#8a6a1f;border:1px solid rgba(201,168,76,.35);font-weight:800}
 .t-lost{background:rgba(204,0,0,.06);color:#94a3b8;border:1px solid rgba(204,0,0,.1)}
 .t-pend{background:rgba(107,122,153,.07);color:var(--muted);border:1px solid rgba(107,122,153,.14)}
+.bet-value-chip{font-size:10px;font-weight:700;color:#0a7f44;background:rgba(10,127,68,.08);border:1px solid rgba(10,127,68,.16);border-radius:10px;padding:2px 7px;white-space:nowrap}
+.bet-number-tag{font-size:9px;font-weight:800;color:white;background:var(--blue);border-radius:8px;padding:1px 6px;margin-left:5px;vertical-align:1px}
+.palps-total-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;padding:.625rem .875rem;
+  background:linear-gradient(135deg,rgba(0,51,160,.06),rgba(0,51,160,.02));border:1px solid rgba(0,51,160,.12);border-radius:12px;
+  font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px}
+.palps-total-footer-n{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;text-transform:none}
 
 /* FORMS */
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
@@ -357,6 +379,55 @@ header{position:sticky;top:0;z-index:100;
 /* ADMIN WALL */
 .awall{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--gborder);border-radius:var(--r20);padding:3rem;text-align:center;box-shadow:0 6px 32px rgba(0,40,140,.08)}
 
+/* BOLAO PICKER CARDS */
+.bolao-card{position:relative;overflow:hidden;cursor:pointer;
+  background:rgba(255,255,255,.58);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,.78);border-radius:var(--r20);
+  box-shadow:0 4px 24px rgba(0,40,140,.07),inset 0 1px 0 rgba(255,255,255,.9);
+  transition:transform .18s,box-shadow .18s;padding:1.125rem 1.25rem}
+.bolao-card:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,40,140,.13)}
+.bolao-card-bar{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#009C3B,#FFDF00)}
+.bolao-card-hd{display:flex;align-items:center;gap:.75rem;margin-bottom:.625rem}
+.bolao-card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:linear-gradient(135deg,#0033A0,#1a56d6);color:white}
+.bolao-card-icon svg{width:21px;height:21px}
+.bolao-card-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.5px;color:var(--ink);line-height:1.1}
+.bolao-card-meta{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-top:2px}
+.bolao-card-meta svg{width:11px;height:11px}
+.bolao-card-stats{display:flex;gap:.625rem;margin-top:.625rem}
+.bolao-stat-chip{flex:1;background:rgba(0,51,160,.05);border:1px solid rgba(0,51,160,.1);border-radius:10px;padding:.5rem;text-align:center}
+.bolao-stat-chip-n{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue);line-height:1}
+.bolao-stat-chip-l{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.lock-badge{position:absolute;top:.875rem;right:.875rem;width:26px;height:26px;border-radius:50%;
+  background:rgba(204,0,0,.1);color:var(--red);display:flex;align-items:center;justify-content:center;border:1px solid rgba(204,0,0,.2)}
+.lock-badge svg{width:13px;height:13px}
+.pub-badge{position:absolute;top:.875rem;right:.875rem;display:flex;align-items:center;gap:4px;
+  background:rgba(10,127,68,.09);color:var(--green);border:1px solid rgba(10,127,68,.18);
+  border-radius:20px;padding:3px 9px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.pub-badge svg{width:10px;height:10px}
+
+.create-bolao-cta{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:16px 20px;border:2px dashed rgba(0,51,160,.25);border-radius:18px;cursor:pointer;background:rgba(0,51,160,.03);
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:var(--blue);transition:all .18s}
+.create-bolao-cta:hover{background:rgba(0,51,160,.06);border-color:rgba(0,51,160,.4)}
+.create-bolao-cta svg{width:18px;height:18px}
+
+.active-bolao-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.75);border-radius:20px;padding:5px 12px 5px 6px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.active-bolao-pill:hover{background:rgba(255,255,255,.8)}
+.active-bolao-pill-icon{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#0033A0,#1a56d6);
+  display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0}
+.active-bolao-pill-icon svg{width:11px;height:11px}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  padding:.75rem 1rem;background:rgba(0,51,160,.04);border:1px solid rgba(0,51,160,.1);border-radius:var(--r12)}
+.toggle-row-lbl{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px}
+.toggle-row-lbl svg{width:16px;height:16px;color:var(--blue)}
+.toggle-sw{position:relative;width:42px;height:24px;border-radius:20px;background:#cbd5e1;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.toggle-sw.on{background:var(--green)}
+.toggle-sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.toggle-sw.on::after{transform:translateX(18px)}
+
 /* RULES */
 .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.875rem}
 .rule{padding:1.25rem;border-radius:var(--r16);background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.65);text-align:center}
@@ -386,6 +457,46 @@ header{position:sticky;top:0;z-index:100;
 .empty{text-align:center;padding:2.5rem 1rem;color:#94a3b8;font-size:13px}
 .empty svg{width:36px;height:36px;color:#cbd5e1;display:block;margin:0 auto .75rem}
 
+/* SPLASH WELCOME SCREEN */
+.splash-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+  padding:1.25rem;overflow:hidden;
+  background:linear-gradient(135deg,#001a52 0%,#002776 30%,#006633 65%,#009C3B 100%)}
+.splash-overlay.hidden{display:none}
+.splash-mesh{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.splash-mesh .orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.45;animation:drift 22s ease-in-out infinite}
+.splash-mesh .o1{width:500px;height:500px;background:radial-gradient(circle,#FFDF00,transparent 70%);top:-120px;left:-100px}
+.splash-mesh .o2{width:450px;height:450px;background:radial-gradient(circle,#CC0000,transparent 70%);bottom:-100px;right:-80px;animation-delay:5s;animation-direction:reverse}
+.splash-mesh .o3{width:400px;height:400px;background:radial-gradient(circle,#009C3B,transparent 70%);top:30%;right:10%;animation-delay:10s}
+.splash-card{position:relative;z-index:1;max-width:420px;width:100%;text-align:center;
+  background:rgba(255,255,255,.1);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);
+  border:1px solid rgba(255,255,255,.18);border-radius:28px;padding:2.25rem 1.75rem;
+  box-shadow:0 24px 64px rgba(0,10,40,.45);animation:splashPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes splashPop{from{transform:scale(.9) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.splash-skip{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.85);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:6px 13px;border-radius:20px;cursor:pointer;transition:background .15s}
+.splash-skip:hover{background:rgba(255,255,255,.22)}
+.splash-badge{width:84px;height:86px;margin:0 auto 1.125rem;filter:drop-shadow(0 8px 20px rgba(0,0,0,.35))}
+.splash-badge svg{width:100%;height:100%}
+.splash-badge svg{width:100%;height:100%}
+.splash-tag{font-size:10px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:.5rem}
+.splash-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,38px);letter-spacing:1px;color:white;line-height:1.1;margin-bottom:.875rem}
+.splash-title span{color:#FFDF00}
+.splash-sub{font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.6;margin-bottom:1.5rem}
+.splash-steps{display:flex;flex-direction:column;gap:.625rem;margin-bottom:1.75rem;text-align:left}
+.splash-step{display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;padding:.625rem .875rem}
+.splash-step-ico{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#FFDF00}
+.splash-step-ico svg{width:16px;height:16px}
+.splash-step span{font-size:13px;font-weight:600;color:white}
+.splash-continue{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:15px;border:none;border-radius:16px;cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:14.5px;font-weight:800;color:#002776;
+  background:linear-gradient(110deg,#009C3B,#FFDF00 100%);
+  box-shadow:0 10px 28px rgba(0,156,59,.4);transition:all .18s}
+.splash-continue:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(0,156,59,.5)}
+.splash-continue svg{width:18px;height:18px}
+@media(max-width:420px){.splash-card{padding:1.875rem 1.375rem}}
+
 /* RESPONSIVE */
 @media(max-width:480px){
   .hero{padding:1.5rem}
@@ -402,6 +513,79 @@ header{position:sticky;top:0;z-index:100;
 </head>
 <body>
 
+<!-- ══ SPLASH DE BOAS-VINDAS (primeira visita) ══════════════════ -->
+<div class="splash-overlay" id="splash-overlay">
+  <div class="splash-mesh">
+    <div class="orb o1"></div><div class="orb o2"></div>
+    <div class="orb o3"></div><div class="orb o4"></div>
+  </div>
+  <div class="splash-card">
+    <button class="splash-skip" onclick="closeSplash()">Pular</button>
+    <div class="splash-badge">
+      <svg viewBox="0 0 240 244" fill="none">
+        <defs>
+          <linearGradient id="splashNavy" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0d2454"/>
+            <stop offset="100%" stop-color="#04102b"/>
+          </linearGradient>
+          <linearGradient id="splashGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE588"/>
+            <stop offset="100%" stop-color="#C9A84C"/>
+          </linearGradient>
+        </defs>
+        <path d="M120 6 L210 34 L210 112 C210 172 170 208 120 226 C70 208 30 172 30 112 L30 34 Z"
+              fill="url(#splashNavy)" stroke="url(#splashGold)" stroke-width="5"/>
+        <path d="M120 16 L200 41 L200 112 C200 165 164 196 120 213 C76 196 40 165 40 112 L40 41 Z"
+              fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1.4"/>
+        <path d="M120 16 L162 29 L162 130 L120 165 Z" fill="#0a7f44" opacity=".4"/>
+        <g transform="translate(120,82)">
+          <circle r="44" fill="white" stroke="#0a1a3a" stroke-width="2.2"/>
+          <g stroke="#0a1a3a" stroke-width="2" fill="#0a1a3a" stroke-linejoin="round">
+            <polygon points="0,-18 17,-5.5 10.5,14 -10.5,14 -17,-5.5"/>
+            <path d="M0,-18 L-6,-34" fill="none"/>
+            <path d="M0,-18 L6,-34" fill="none"/>
+            <path d="M17,-5.5 L36,-11" fill="none"/>
+            <path d="M17,-5.5 L32,6" fill="none"/>
+            <path d="M-17,-5.5 L-36,-11" fill="none"/>
+            <path d="M-17,-5.5 L-32,6" fill="none"/>
+            <path d="M10.5,14 L19,31" fill="none"/>
+            <path d="M-10.5,14 L-19,31" fill="none"/>
+            <path d="M10.5,14 L0,36" fill="none"/>
+            <path d="M-10.5,14 L0,36" fill="none"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="splash-tag">Copa do Mundo 2026</div>
+    <div class="splash-title">Bem-vindo ao<br><span>Bolão da Galera</span></div>
+    <div class="splash-sub">Crie seu bolão, faça seu palpite e<br>dispute o prêmio com seus amigos!</div>
+    <div class="splash-steps">
+      <div class="splash-step">
+        <div class="splash-step-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <span>Crie ou entre num bolão</span>
+      </div>
+      <div class="splash-step">
+        <div class="splash-step-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <span>Registre seu palpite</span>
+      </div>
+      <div class="splash-step">
+        <div class="splash-step-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+        </div>
+        <span>Dispute o prêmio</span>
+      </div>
+    </div>
+    <button class="splash-continue" onclick="closeSplash()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Vamos começar!
+    </button>
+  </div>
+</div>
+
 <div class="mesh">
   <div class="orb o1"></div><div class="orb o2"></div>
   <div class="orb o3"></div><div class="orb o4"></div>
@@ -417,17 +601,26 @@ header{position:sticky;top:0;z-index:100;
       <div class="modal-teams" id="modal-teams"></div>
     </div>
     <div class="modal-body">
-      <div class="modal-lbl">Qual vai ser o placar?</div>
-      <div class="modal-score-row">
-        <input class="modal-si" type="number" min="0" max="20" placeholder="0" id="modal-bh">
-        <span class="modal-sep">×</span>
-        <input class="modal-si" type="number" min="0" max="20" placeholder="0" id="modal-ba">
-      </div>
       <div class="modal-lbl">Seu nome</div>
-      <input class="modal-ni" type="text" placeholder="Digite seu nome" id="modal-bn" maxlength="30" onkeydown="if(event.key==='Enter')confirmBet()">
+      <input class="modal-ni" type="text" placeholder="Digite seu nome" id="modal-bn" maxlength="30">
+
+      <div class="modal-lbl">Quantos palpites você quer registrar?</div>
+      <div class="qty-row">
+        <button type="button" class="qty-btn" onclick="changeBetQty(-1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="qty-display" id="bet-qty-display">1</div>
+        <button type="button" class="qty-btn" onclick="changeBetQty(1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-lbl">Qual vai ser o placar?</div>
+      <div id="bet-score-fields" class="stack" style="margin-bottom:1.125rem"></div>
+
       <button class="modal-submit" onclick="confirmBet()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmar Palpite
+        Confirmar Palpite<span id="bet-submit-plural"></span>
       </button>
     </div>
   </div>
@@ -449,31 +642,98 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
+<!-- CREATE BOLAO MODAL -->
+<div class="modal-overlay" id="create-bolao-modal">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd" style="background:linear-gradient(110deg,#002776 0%,#009C3B 60%,#FFDF00 100%)">
+      <button class="modal-close" onclick="closeCreateBolaoModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div style="text-align:center;position:relative;z-index:1;padding:.25rem 0">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin:0 auto .5rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:white;letter-spacing:1px">Criar Novo Bolão</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="fg" style="margin-bottom:.875rem">
+        <label class="fl">Nome do bolão</label>
+        <input class="fi" type="text" id="cb-nome" placeholder="Ex: Bolão da Galera do Trabalho" maxlength="40">
+      </div>
+      <div class="fg" style="margin-bottom:.875rem">
+        <label class="fl">Valor de cada palpite (R$)</label>
+        <input class="fi" type="number" id="cb-valor" placeholder="10" min="1" step="1">
+      </div>
+      <div class="fg" style="margin-bottom:.875rem">
+        <label class="fl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;display:inline;vertical-align:-1px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Senha de Admin <span style="color:var(--red)">*</span>
+        </label>
+        <input class="fi" type="text" id="cb-admin-senha" placeholder="Só você vai usar essa senha para editar" maxlength="20">
+        <div style="font-size:10.5px;color:var(--muted);margin-top:3px">Guarde bem — é o que permite cadastrar jogos e inserir o placar final deste bolão.</div>
+      </div>
+      <div class="toggle-row" style="margin-bottom:.875rem">
+        <div class="toggle-row-lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Bolão privado (com senha)
+        </div>
+        <button type="button" class="toggle-sw" id="cb-privado-toggle" onclick="toggleCbPrivado()"></button>
+      </div>
+      <div class="fg" id="cb-senha-wrap" style="display:none;margin-bottom:.875rem">
+        <label class="fl">Senha de acesso para participantes</label>
+        <input class="fi" type="text" id="cb-senha" placeholder="Combine com a turma" maxlength="20">
+      </div>
+      <button class="modal-submit" onclick="confirmCreateBolao()" style="background:linear-gradient(110deg,#009C3B,#FFDF00 100%);color:#002776">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Criar Bolão
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ENTER PASSWORD MODAL (private bolao) -->
+<div class="modal-overlay" id="enter-bolao-modal">
+  <div class="modal-box" style="max-width:380px">
+    <div class="modal-body" style="padding-top:1.75rem">
+      <div style="width:46px;height:46px;border-radius:50%;background:rgba(0,51,160,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0033A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:.25rem" id="eb-nome">Bolão Privado</div>
+      <div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:1.125rem">Este bolão é privado. Digite a senha para entrar.</div>
+      <input class="fi" type="text" id="eb-senha" placeholder="Senha do bolão" style="margin-bottom:1.125rem;text-align:center" onkeydown="if(event.key==='Enter')confirmEnterBolao()">
+      <button class="modal-submit" onclick="confirmEnterBolao()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        Entrar no Bolão
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <header>
 <div class="wrap hdr">
   <a class="logo" href="#">
     <div class="logo-badge">
-      <svg viewBox="0 0 36 36" fill="none">
+      <svg viewBox="0 0 80 80" fill="none">
         <defs>
-          <clipPath id="lc"><rect x="0" y="0" width="36" height="36" rx="9"/></clipPath>
+          <radialGradient id="lbg" cx="35%" cy="28%" r="78%">
+            <stop offset="0%" stop-color="#1a56d6"/>
+            <stop offset="100%" stop-color="#001a52"/>
+          </radialGradient>
+          <linearGradient id="lgold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE16B"/>
+            <stop offset="100%" stop-color="#C9A84C"/>
+          </linearGradient>
         </defs>
-        <g clip-path="url(#lc)">
-          <rect width="36" height="36" fill="#CC0000"/>
-          <!-- "2" left -->
-          <path d="M3 8.5c0-2.4 2.1-4.3 5-4.3s5 1.7 5 4c0 1.8-1 3-2.8 4.4L6.3 16H13v3H3v-2.6l6-4.6c1.3-1 1.8-1.7 1.8-2.6 0-1-.9-1.7-2-1.7-1.2 0-2 .8-2.1 2H3z" fill="white"/>
-          <!-- "6" right -->
-          <path d="M22 4.2c2.7 0 4.6 1.3 5 3.4h-3.1c-.3-.7-1-1.1-1.9-1.1-1.6 0-2.6 1.3-2.7 3.6.7-.8 1.8-1.3 3.1-1.3 2.5 0 4.3 1.7 4.3 4.1 0 2.6-2 4.4-4.9 4.4-3.3 0-5.4-2.3-5.4-6.2 0-4.3 2.2-6.9 5.6-6.9zm-.3 7.4c-1.1 0-1.9.8-1.9 1.9 0 1.1.8 1.9 1.9 1.9s1.9-.8 1.9-1.9c0-1.1-.8-1.9-1.9-1.9z" fill="white"/>
-          <!-- trophy -->
-          <g transform="translate(11.5,9.5)">
-            <rect x="4.3" y="13" width="4.4" height="2" rx="0.4" fill="#0a0a0a" opacity=".18"/>
-            <path d="M6.5 9.2c-1.6 0-2.9-1.1-2.9-2.5V3.4h5.8v3.3c0 1.4-1.3 2.5-2.9 2.5z" fill="#C9A84C"/>
-            <path d="M3.6 4H1.8c-.6 0-1 .5-.9 1.1.3 1.4 1.4 2.4 2.8 2.5" stroke="#C9A84C" stroke-width="0.9" fill="none"/>
-            <path d="M9.4 4h1.8c.6 0 1 .5.9 1.1-.3 1.4-1.4 2.4-2.8 2.5" stroke="#C9A84C" stroke-width="0.9" fill="none"/>
-            <rect x="5.6" y="9" width="1.8" height="1.6" fill="#C9A84C"/>
-            <path d="M4.5 10.6h4v1.2c0 .5-.4.9-.9.9H5.4c-.5 0-.9-.4-.9-.9v-1.2z" fill="#0a3d62"/>
-            <rect x="4.5" y="11.3" width="4" height="0.5" fill="#C9A84C"/>
-          </g>
+        <circle cx="40" cy="40" r="37.5" fill="url(#lbg)"/>
+        <circle cx="40" cy="40" r="37.5" fill="none" stroke="url(#lgold)" stroke-width="4"/>
+        <g transform="translate(40,38) scale(1.55)">
+          <path d="M-8 -9 L8 -9 L8 3 C8 8.5 4.5 11.5 0 11.5 C-4.5 11.5 -8 8.5 -8 3 Z" fill="url(#lgold)"/>
+          <path d="M-8 -7 L-13.5 -7 C-14.5 -7 -14.8 -5 -13.5 -2.5 C-12 0.5 -10 2.8 -8 3.5" stroke="url(#lgold)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M8 -7 L13.5 -7 C14.5 -7 14.8 -5 13.5 -2.5 C12 0.5 10 2.8 8 3.5" stroke="url(#lgold)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <rect x="-2.5" y="11.5" width="5" height="4" fill="url(#lgold)"/>
+          <rect x="-6.5" y="15" width="13" height="2.2" rx="1.1" fill="url(#lgold)"/>
         </g>
       </svg>
     </div>
@@ -483,19 +743,27 @@ header{position:sticky;top:0;z-index:100;
     </div>
   </a>
   <nav class="nav">
-    <button class="nb on" onclick="go('home',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg>
-      <span class="nb-lbl">Início</span>
+    <button class="nb on" id="nb-boloes" onclick="go('boloes',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span class="nb-lbl">Bolões</span>
     </button>
-    <button class="nb" onclick="go('jogos',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg>
-      <span class="nb-lbl">Jogos</span>
+    <button class="nb" id="nb-meus" onclick="go('meus',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="nb-lbl">Meus Bolões</span>
     </button>
-    <button class="nb" onclick="go('admin',this)">
+    <button class="nb" id="nb-admin" onclick="go('admin',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       <span class="nb-lbl">Admin</span>
     </button>
+    <button class="nb" id="nb-ajuda" onclick="go('ajuda',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span class="nb-lbl">Como Usar</span>
+    </button>
   </nav>
+  <div class="active-bolao-pill" id="active-bolao-pill" onclick="go('boloes',document.getElementById('nb-boloes'))" style="display:none">
+    <span class="active-bolao-pill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+    <span id="active-bolao-name">—</span>
+  </div>
   <span class="sync-pill offline" id="sync-pill">
     <span class="sync-dot"></span><span class="sync-lbl" id="sync-lbl">Conectando…</span>
   </span>
@@ -504,17 +772,71 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="wrap" style="padding-top:1.25rem;padding-bottom:3rem">
 
-<!-- ══ HOME ══════════════════════════════════════════════ -->
-<div id="pg-home" class="pg on">
+<!-- ══ BOLÕES (seleção/criação) ══════════════════════════ -->
+<div id="pg-boloes" class="pg on">
 
   <div class="hero gap20">
     <div class="hero-glyph">26</div>
     <div class="hero-tag">Copa do Mundo 2026</div>
     <div class="hero-title">BOLÃO<br><span>DA GALERA</span></div>
-    <div class="hero-hosts">
-      <div class="hpill">🇺🇸 Estados Unidos</div>
-      <div class="hpill">🇨🇦 Canadá</div>
-      <div class="hpill">🇲🇽 México</div>
+    <div class="hero-sub">Crie seu bolão, palpite nos jogos e dispute o prêmio com a galera ⚽</div>
+  </div>
+
+  <div class="gc gap20">
+    <div class="sh">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </div>
+      <div><div class="sh-t">Bolões Disponíveis</div><div class="sh-s">Escolha um bolão para entrar ou crie o seu</div></div>
+    </div>
+    <div style="padding:0 .875rem 1.125rem">
+      <button class="create-bolao-cta" onclick="openCreateBolaoModal()" style="border-style:solid;background:linear-gradient(110deg,#009C3B,#FFDF00 100%);color:#002776;border:none;font-weight:800;box-shadow:0 4px 14px rgba(0,156,59,.3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Criar novo bolão
+      </button>
+    </div>
+    <div style="padding:0 .875rem .875rem">
+      <div style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="fi" type="text" id="bolao-filter" placeholder="Buscar bolão pelo nome..." style="padding-left:38px" oninput="renderBoloesList()">
+      </div>
+    </div>
+    <div class="dl"></div>
+    <div style="padding:.875rem .875rem 1rem" class="stack" id="boloes-list"></div>
+  </div>
+
+</div>
+
+<!-- ══ HOME ══════════════════════════════════════════════ -->
+<!-- ══ MEUS BOLÕES (onde a pessoa já palpitou) ═══════════ -->
+<div id="pg-meus" class="pg">
+  <div class="gc gap20">
+    <div class="sh">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0a7f44,#14a862)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div><div class="sh-t">Meus Bolões</div><div class="sh-s">Bolões onde você já registrou algum palpite</div></div>
+    </div>
+    <div class="dl"></div>
+    <div style="padding:.875rem .875rem 1rem" class="stack" id="meus-boloes-list"></div>
+  </div>
+</div>
+
+<div id="pg-detalhe" class="pg">
+
+  <div class="gc gap20" style="padding:1.125rem 1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:var(--ink)" id="bh-name">—</div>
+        <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-top:1px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span id="bh-valor">R$ 0</span> por palpite
+        </div>
+      </div>
+      <button onclick="go('meus',document.getElementById('nb-meus'))" style="display:flex;align-items:center;gap:5px;padding:7px 13px;border:1.5px solid rgba(0,51,160,.15);background:transparent;border-radius:10px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Voltar
+      </button>
     </div>
   </div>
 
@@ -549,88 +871,122 @@ header{position:sticky;top:0;z-index:100;
 
 </div>
 
-<!-- ══ JOGOS ══════════════════════════════════════════════ -->
-<div id="pg-jogos" class="pg">
+<!-- ══ ADMIN ══════════════════════════════════════════════ -->
+<div id="pg-admin" class="pg">
   <div class="gc gap20">
     <div class="sh">
       <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       </div>
-      <div><div class="sh-t">Todos os Jogos</div><div class="sh-s">Histórico completo com todos os palpites</div></div>
+      <div><div class="sh-t">Meus Bolões</div><div class="sh-s">Você só administra os bolões para os quais tem a senha de admin</div></div>
     </div>
-  </div>
-  <div class="stack" id="all-games"></div>
-</div>
-
-<!-- ══ ADMIN ══════════════════════════════════════════════ -->
-<div id="pg-admin" class="pg">
-  <div id="aw" style="display:none">
-    <div class="awall">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:44px;height:44px;color:#94a3b8;display:block;margin:0 auto 1rem"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:.5rem">Área Restrita</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">Digite a senha para acessar o painel de administração.</div>
-      <div class="row" style="justify-content:center">
-        <input type="password" class="fi" id="apw" placeholder="Senha de admin" style="max-width:190px" onkeydown="if(event.key==='Enter')chkpw()">
-        <button class="btn-p" onclick="chkpw()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
-          Entrar
+    <div class="dl"></div>
+    <div style="padding:.875rem .875rem 1rem">
+      <div style="display:flex;gap:.625rem;flex-wrap:wrap;margin-bottom:.875rem">
+        <input class="fi" type="text" id="unlock-admin-pw" placeholder="Senha de admin de um bolão" style="flex:1;min-width:180px" onkeydown="if(event.key==='Enter')unlockAdminByPassword()">
+        <button class="btn-p" onclick="unlockAdminByPassword()" style="flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Destravar
         </button>
       </div>
+      <div id="admin-boloes-list" class="stack"></div>
     </div>
   </div>
-  <div id="ac" class="stack">
-    <!-- cadastrar jogo -->
-    <div class="gc gc-pad">
-      <div class="sh" style="padding:0 0 .875rem">
-        <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div><div class="sh-t">Cadastrar Jogo</div><div class="sh-s">Configure o confronto, fase e prazo para palpites</div></div>
-      </div>
-      <div class="fgrid" style="margin-bottom:.875rem">
-        <div class="fg"><label class="fl">Time da Casa</label><select class="fs" id="th"></select></div>
-        <div class="fg"><label class="fl">Time Visitante</label><select class="fs" id="ta"></select></div>
-        <div class="fg"><label class="fl">Fase / Grupo</label>
-          <select class="fs" id="ph">
-            <option>Fase de Grupos – Grupo A</option><option>Fase de Grupos – Grupo B</option><option>Fase de Grupos – Grupo C</option><option>Fase de Grupos – Grupo D</option><option>Fase de Grupos – Grupo E</option><option>Fase de Grupos – Grupo F</option><option>Fase de Grupos – Grupo G</option><option>Fase de Grupos – Grupo H</option><option>Fase de Grupos – Grupo I</option><option>Fase de Grupos – Grupo J</option><option>Fase de Grupos – Grupo K</option><option>Fase de Grupos – Grupo L</option><option>Oitavas de Final</option><option>Quartas de Final</option><option>Semifinal</option><option>Disputa de 3º Lugar</option><option>Final</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label class="fl">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;display:inline;vertical-align:-1px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Data e hora limite para palpites
-          </label>
-          <input type="datetime-local" class="fi" id="dl">
-        </div>
-      </div>
-      <button class="btn-p" onclick="addMatch()">
+</div>
+
+<!-- ══ COMO USAR ══════════════════════════════════════════ -->
+<div id="pg-ajuda" class="pg">
+
+  <div class="gc gap20" style="text-align:center;padding:1.75rem">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;color:var(--blue)">COMO FUNCIONA O BOLÃO</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:4px">Siga o passo a passo para criar e jogar com a sua galera</div>
+  </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Cadastrar Jogo
-      </button>
-    </div>
-    <!-- gerenciar jogos -->
-    <div class="gc gc-pad">
-      <div class="sh" style="padding:0 0 .875rem">
-        <div class="sh-ico" style="background:linear-gradient(135deg,#CC0000,#f02020)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        </div>
-        <div><div class="sh-t">Gerenciar Jogos</div><div class="sh-s">Insira o resultado oficial após cada partida</div></div>
       </div>
-      <div class="dl" style="margin-bottom:.875rem"></div>
-      <div class="stack" id="aml"></div>
+      <div><div class="sh-t">1. Criar um bolão</div><div class="sh-s">Qualquer pessoa pode criar o seu</div></div>
     </div>
-    <!-- participantes -->
-    <div class="gc gc-pad">
-      <div class="sh" style="padding:0 0 .875rem">
-        <div class="sh-ico" style="background:linear-gradient(135deg,#C9A84C,#e8c55e)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <div><div class="sh-t">Participantes</div><div class="sh-s">Entram automaticamente ao palpitar</div></div>
-      </div>
-      <div class="dl" style="margin-bottom:.875rem"></div>
-      <div id="plist" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div>Na aba <strong>Bolões</strong>, clique em <strong>"Criar novo bolão"</strong>.</div>
+      <div>Preencha o <strong>nome</strong> do bolão e o <strong>valor de cada palpite</strong> (em R$) — esse é o valor que cada pessoa "aposta" a cada jogo que palpita.</div>
+      <div>Defina também a <strong>Senha de Admin</strong>: ela é sua e só sua — é o que permite cadastrar jogos e lançar o placar oficial depois. Guarde bem, pois sem ela ninguém (nem você) consegue editar o bolão de outro dispositivo.</div>
+      <div>Ao criar, você já entra automaticamente como administrador daquele bolão neste navegador.</div>
     </div>
   </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#C9A84C,#e8c55e)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <div><div class="sh-t">2. Público ou privado?</div><div class="sh-s">Você escolhe quem pode ver e entrar</div></div>
+    </div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div><strong>Público:</strong> aparece para qualquer pessoa que abrir o site, na aba "Bolões". Qualquer um pode entrar e palpitar sem senha.</div>
+      <div><strong>Privado:</strong> ative o botão "Bolão privado (com senha)" na criação e defina uma senha de entrada (diferente da senha de admin). Combine essa senha com a sua turma — sem ela, ninguém entra.</div>
+    </div>
+  </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#CC0000,#f02020)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <div><div class="sh-t">3. Entrar em um bolão privado</div><div class="sh-s">Como um convidado acessa</div></div>
+    </div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div>Na aba <strong>Bolões</strong>, os privados aparecem com um ícone de cadeado 🔒 no canto do card.</div>
+      <div>Ao clicar, vai pedir a <strong>senha de entrada</strong> (a que o criador combinou com a turma — não é a senha de admin).</div>
+      <div>Depois de digitar certo uma vez, o navegador "lembra" e não pede de novo, a menos que os dados do navegador sejam limpos.</div>
+    </div>
+  </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0a7f44,#14a862)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div><div class="sh-t">4. Cadastrar um jogo</div><div class="sh-s">Só quem administra aquele bolão pode</div></div>
+    </div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div>Vá na aba <strong>Admin</strong>. Lá aparecem só os bolões que você administra neste navegador.</div>
+      <div>Dentro do card do seu bolão, escolha o <strong>time da casa</strong>, <strong>visitante</strong>, a <strong>fase</strong> da competição e a <strong>data/hora limite</strong> para os palpites daquele jogo.</div>
+      <div>Clique em <strong>"Cadastrar Jogo neste Bolão"</strong> — o jogo passa a aparecer para todos os participantes daquele bolão específico, e de nenhum outro.</div>
+    </div>
+  </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div><div class="sh-t">5. Palpitar</div><div class="sh-s">O que cada participante faz</div></div>
+    </div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div>Dentro do bolão, clique em <strong>"Palpitar"</strong> no jogo desejado, digite seu nome e o placar que você imagina que vai acontecer.</div>
+      <div><strong>Só vale o placar exato</strong> — quem acerta em cheio leva o valor de todos os outros palpites daquele jogo.</div>
+      <div>Depois do prazo definido, ninguém mais consegue palpitar ou alterar o que já enviou.</div>
+      <div>Acompanhe seus bolões na aba <strong>Meus Bolões</strong> — lá aparecem todos onde você já registrou pelo menos um palpite.</div>
+    </div>
+  </div>
+
+  <div class="gc gap20 gc-pad">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#C9A84C,#e8c55e)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+      </div>
+      <div><div class="sh-t">6. Resultado final</div><div class="sh-s">Quem ganha e como</div></div>
+    </div>
+    <div style="font-size:13px;color:#475569;line-height:1.7;display:flex;flex-direction:column;gap:.625rem">
+      <div>O administrador do bolão insere o <strong>placar oficial</strong> depois que o jogo termina, na aba Admin.</div>
+      <div>O sistema compara automaticamente: quem acertou o placar exato aparece destacado em <strong>dourado com um troféu</strong> na lista de palpiteiros.</div>
+      <div>Se ninguém acertar, aparece "Nenhum Ganhador" — combine com a turma o que fazer com o valor (acumular para o próximo jogo, por exemplo).</div>
+    </div>
+  </div>
+
 </div>
 
 
@@ -694,10 +1050,15 @@ const TEAMS=[
   {c:'VEN',n:'Venezuela',f:'ve',col:'#CF142B',e:'🇻🇪'},
 ];
 
-const ADMIN_PW='copa123';
 const AVC=['#0033A0','#CC0000','#0a7f44','#b8922a','#7c3aed','#0891b2','#db2777','#ea580c','#0f766e','#b45309'];
 
-// ══ FIREBASE — shared realtime data for everyone with the link ══════════
+// ══════════════════════════════════════════════════════════════════════
+// MODO DE ARMAZENAMENTO — troque esta linha para mudar o app inteiro:
+//   'local'    → protótipo, salva só neste navegador (localStorage), sem rede
+//   'firebase' → produção, sincroniza em tempo real entre todos os dispositivos
+// ══════════════════════════════════════════════════════════════════════
+const STORAGE_MODE = 'firebase';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBmLCPfNsgBSleNupMBuD_5N79rd-HatJE",
   authDomain: "bolao-da-galera-9b949.firebaseapp.com",
@@ -707,45 +1068,334 @@ const firebaseConfig = {
   messagingSenderId: "775781086844",
   appId: "1:775781086844:web:21828f96fd7a5623353bf9"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const dataRef = db.ref('bolao');
 
-let ST={players:[],matches:[],bets:{}};
-let adminOn=false;
+let ALL_BOLOES={};           // { boloId: {nome,valor,publico,senha,adminSenha,criadoEm,players,matches,bets} }
+let currentBoloId=localStorage.getItem('bolao_active_id')||null;
 let firebaseReady=false;
+
+// convenience getter for "the bolão currently open" — empty shell if none selected yet
+function CB(){
+  return ALL_BOLOES[currentBoloId] || {nome:'',valor:10,publico:true,senha:'',players:[],matches:[],bets:{}};
+}
+// ST is kept as an alias so the existing render functions (rStats, mcHtml, etc.)
+// keep working unchanged against "the active bolão"
+let ST={players:[],matches:[],bets:{}};
 
 function setSyncStatus(online){
   const pill=document.getElementById('sync-pill');
   const lbl=document.getElementById('sync-lbl');
   if(!pill)return;
   pill.className='sync-pill '+(online?'online':'offline');
-  lbl.textContent=online?'Sincronizado':'Conectando…';
+  lbl.textContent = STORAGE_MODE==='local'
+    ? (online?'Modo local':'Modo local')
+    : (online?'Sincronizado':'Conectando…');
 }
 
-// live listener — any change anyone makes is pushed to everyone instantly
-dataRef.on('value', (snapshot)=>{
-  const val=snapshot.val();
-  ST = val ? {
-    players: val.players || [],
-    matches: val.matches || [],
-    bets: val.bets || {}
-  } : {players:[],matches:[],bets:{}};
+let _firstLoad=true;
+function onBoloesUpdate(snapshotVal){
+  ALL_BOLOES = snapshotVal || {};
+  // keep ST pointing at the active bolão's data
+  const cb=CB();
+  ST = {players:cb.players||[], matches:cb.matches||[], bets:cb.bets||{}};
   firebaseReady=true;
   setSyncStatus(true);
+  renderBoloesList();
+  updateActiveBolaoUI();
   render();
-}, (error)=>{
-  console.error('Firebase error:', error);
-  setSyncStatus(false);
-  toast('Erro de conexão com o servidor','err');
-});
+  if(_firstLoad){
+    _firstLoad=false;
+    if(currentBoloId && ALL_BOLOES[currentBoloId]){
+      go('meus', document.getElementById('nb-meus'));
+    }
+  }
+}
+
+// ── DB ABSTRACTION ───────────────────────────────────────────────────
+// Two interchangeable backends behind the same tiny interface:
+//   DB.init()                     → wire up the live listener, call once at startup
+//   DB.createBolao(id, data)      → create a new bolão node
+//   DB.updateBolao(id, partial)   → merge-update players/matches/bets of one bolão
+//   DB.deleteBolao(id)            → permanently remove a bolão node
+let boloesRef=null; // only used by the firebase backend
+
+const LOCAL_KEY='bolao_multistore_v1';
+const DB = STORAGE_MODE==='local' ? {
+  init(){
+    const raw=localStorage.getItem(LOCAL_KEY);
+    onBoloesUpdate(raw?JSON.parse(raw):{});
+  },
+  _persist(){
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(ALL_BOLOES));
+    onBoloesUpdate(ALL_BOLOES);
+  },
+  createBolao(id, data){
+    ALL_BOLOES[id]=data;
+    this._persist();
+    return Promise.resolve();
+  },
+  updateBolao(id, partial){
+    if(!ALL_BOLOES[id])return Promise.resolve();
+    Object.assign(ALL_BOLOES[id], partial);
+    this._persist();
+    return Promise.resolve();
+  },
+  deleteBolao(id){
+    delete ALL_BOLOES[id];
+    this._persist();
+    return Promise.resolve();
+  }
+} : {
+  init(){
+    try{
+      firebase.initializeApp(firebaseConfig);
+      const db=firebase.database();
+      boloesRef=db.ref('boloes');
+      boloesRef.on('value', (snap)=>onBoloesUpdate(snap.val()), (error)=>{
+        console.error('Firebase read error:', error);
+        setSyncStatus(false);
+        toast('Erro de conexão com o servidor','err');
+      });
+    } catch(e){
+      console.error('Firebase init failed:', e);
+      setSyncStatus(false);
+      setTimeout(()=>toast('Não foi possível conectar ao servidor. Verifique sua internet e atualize a página.','err'), 500);
+    }
+  },
+  createBolao(id, data){
+    if(!boloesRef)return Promise.reject('no connection');
+    return boloesRef.child(id).set(data).then(()=>{ALL_BOLOES[id]=data;});
+  },
+  updateBolao(id, partial){
+    if(!boloesRef)return Promise.reject('no connection');
+    return boloesRef.child(id).update(partial);
+  },
+  deleteBolao(id){
+    if(!boloesRef)return Promise.reject('no connection');
+    return boloesRef.child(id).remove();
+  }
+};
+
+DB.init();
 
 function save(){
-  // pushes the current in-memory state to Firebase; the onValue listener
-  // above will then re-render for this tab AND every other tab/device
-  dataRef.set(ST).catch(err=>{
+  // updates ONLY this bolão's players/matches/bets path — never overwrites the
+  // whole boloes tree, so concurrent edits from other people/bolões are safe
+  if(!currentBoloId)return;
+  DB.updateBolao(currentBoloId, {
+    players: ST.players,
+    matches: ST.matches,
+    bets: ST.bets
+  }).catch(err=>{
     console.error('Save error:', err);
     toast('Erro ao salvar — verifique sua conexão','err');
+  });
+}
+
+// ══ BOLÃO LIST / CREATE / ENTER ══════════════════════════════════════
+function renderBoloesList(){
+  const el=document.getElementById('boloes-list');
+  if(!el)return;
+  const filterEl=document.getElementById('bolao-filter');
+  const filterTxt=(filterEl?.value||'').trim().toLowerCase();
+  let ids=Object.keys(ALL_BOLOES);
+
+  if(!ids.length){
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Nenhum bolão criado ainda. Crie o primeiro!</div>`;
+    return;
+  }
+
+  if(filterTxt){
+    ids=ids.filter(id=>(ALL_BOLOES[id].nome||'').toLowerCase().includes(filterTxt));
+  }
+  if(!ids.length){
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Nenhum bolão encontrado com esse nome.</div>`;
+    return;
+  }
+
+  const lockSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`;
+  const pubSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`;
+  const trophySvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>`;
+
+  el.innerHTML=ids.map(id=>{
+    const b=ALL_BOLOES[id];
+    const numJogos=Object.keys(b.matches||{}).length;
+    const numPalpites=Object.values(b.bets||{}).reduce((acc,obj)=>acc+Object.keys(obj||{}).length,0);
+    const totalArrecadado=numPalpites*(b.valor||10);
+    return `<div class="bolao-card" onclick="selectBolao('${id}')">
+      <div class="bolao-card-bar"></div>
+      ${b.publico===false?`<div class="lock-badge">${lockSvg}</div>`:`<div class="pub-badge">${pubSvg}Público</div>`}
+      <div class="bolao-card-hd">
+        <div class="bolao-card-icon">${trophySvg}</div>
+        <div>
+          <div class="bolao-card-name">${b.nome||'Bolão'}</div>
+          <div class="bolao-card-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>R$ ${(b.valor||10).toLocaleString('pt-BR')} por palpite</div>
+        </div>
+      </div>
+      <div class="bolao-card-stats">
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${(b.players||[]).length}</div><div class="bolao-stat-chip-l">Pessoas</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numJogos}</div><div class="bolao-stat-chip-l">Jogos</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">R$${totalArrecadado.toLocaleString('pt-BR')}</div><div class="bolao-stat-chip-l">Total</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectBolao(id){
+  const b=ALL_BOLOES[id];
+  if(!b)return;
+  if(b.publico===false){
+    // check if already unlocked this session/browser
+    const unlocked=JSON.parse(localStorage.getItem('bolao_unlocked')||'[]');
+    if(!unlocked.includes(id)){
+      pendingBoloId=id;
+      document.getElementById('eb-nome').textContent=b.nome||'Bolão Privado';
+      document.getElementById('eb-senha').value='';
+      document.getElementById('enter-bolao-modal').classList.add('on');
+      setTimeout(()=>document.getElementById('eb-senha').focus(),150);
+      return;
+    }
+  }
+  activateBolao(id);
+}
+
+let pendingBoloId=null;
+function confirmEnterBolao(){
+  const b=ALL_BOLOES[pendingBoloId];
+  if(!b)return;
+  const typed=document.getElementById('eb-senha').value;
+  if(typed!==b.senha){toast('Senha incorreta','err');return;}
+  const unlocked=JSON.parse(localStorage.getItem('bolao_unlocked')||'[]');
+  if(!unlocked.includes(pendingBoloId)){unlocked.push(pendingBoloId);localStorage.setItem('bolao_unlocked',JSON.stringify(unlocked));}
+  document.getElementById('enter-bolao-modal').classList.remove('on');
+  activateBolao(pendingBoloId);
+}
+
+function activateBolao(id){
+  currentBoloId=id;
+  localStorage.setItem('bolao_active_id',id);
+  const b=ALL_BOLOES[id]||{};
+  ST={players:b.players||[],matches:b.matches||[],bets:b.bets||{}};
+  updateActiveBolaoUI();
+  toast(`Você entrou em "${b.nome||'Bolão'}"!`);
+  go('detalhe', null);
+}
+
+function updateActiveBolaoUI(){
+  const pill=document.getElementById('active-bolao-pill');
+  const nameEl=document.getElementById('active-bolao-name');
+  const bhName=document.getElementById('bh-name');
+  const bhValor=document.getElementById('bh-valor');
+  if(!currentBoloId || !ALL_BOLOES[currentBoloId]){
+    if(pill)pill.style.display='none';
+    return;
+  }
+  const b=ALL_BOLOES[currentBoloId];
+  if(pill){pill.style.display='flex';}
+  if(nameEl)nameEl.textContent=b.nome||'Bolão';
+  if(bhName)bhName.textContent=b.nome||'Bolão';
+  if(bhValor)bhValor.textContent='R$ '+(b.valor||10).toLocaleString('pt-BR');
+}
+
+function openCreateBolaoModal(){
+  document.getElementById('cb-nome').value='';
+  document.getElementById('cb-valor').value='10';
+  document.getElementById('cb-senha').value='';
+  document.getElementById('cb-admin-senha').value='';
+  cbPrivado=false;
+  document.getElementById('cb-privado-toggle').className='toggle-sw';
+  document.getElementById('cb-senha-wrap').style.display='none';
+  document.getElementById('create-bolao-modal').classList.add('on');
+  setTimeout(()=>document.getElementById('cb-nome').focus(),150);
+}
+function closeCreateBolaoModal(){
+  document.getElementById('create-bolao-modal').classList.remove('on');
+}
+let cbPrivado=false;
+function toggleCbPrivado(){
+  cbPrivado=!cbPrivado;
+  document.getElementById('cb-privado-toggle').className='toggle-sw'+(cbPrivado?' on':'');
+  document.getElementById('cb-senha-wrap').style.display=cbPrivado?'block':'none';
+}
+function confirmCreateBolao(){
+  const nome=document.getElementById('cb-nome').value.trim();
+  const valor=parseFloat(document.getElementById('cb-valor').value)||10;
+  const senha=document.getElementById('cb-senha').value.trim();
+  const adminSenha=document.getElementById('cb-admin-senha').value.trim();
+  if(!nome){toast('Digite um nome para o bolão','err');return;}
+  if(!adminSenha){toast('Defina a senha de admin deste bolão','err');return;}
+  if(cbPrivado && !senha){toast('Defina uma senha para o bolão privado','err');return;}
+  const id='b'+Date.now();
+  const novoBolao={
+    nome, valor, publico:!cbPrivado, senha:cbPrivado?senha:'',
+    adminSenha,
+    criadoEm:Date.now(), players:[], matches:[], bets:{}
+  };
+  DB.createBolao(id, novoBolao).then(()=>{
+    if(cbPrivado){
+      const unlocked=JSON.parse(localStorage.getItem('bolao_unlocked')||'[]');
+      unlocked.push(id);localStorage.setItem('bolao_unlocked',JSON.stringify(unlocked));
+    }
+    // the creator gets automatic admin access on this browser, right away
+    grantAdminAccess(id, adminSenha);
+    closeCreateBolaoModal();
+    activateBolao(id);
+  }).catch(err=>{
+    console.error(err);
+    toast('Erro ao criar bolão — verifique sua conexão','err');
+  });
+}
+
+// ── PER-BOLÃO ADMIN OWNERSHIP ─────────────────────────────────────────
+// A browser "owns" admin rights to a bolão once it knows that bolão's admin
+// password — either because it created it, or because someone typed the
+// correct password in the "Destravar" field. This is intentionally NOT tied
+// to any single global password: each bolão's creator controls only their
+// own bolão, and never anyone else's.
+function getAdminUnlockedIds(){
+  return JSON.parse(localStorage.getItem('bolao_admin_unlocked')||'[]');
+}
+function grantAdminAccess(id, _pw){
+  const ids=getAdminUnlockedIds();
+  if(!ids.includes(id)){ids.push(id);localStorage.setItem('bolao_admin_unlocked',JSON.stringify(ids));}
+}
+function isAdminOf(id){
+  return getAdminUnlockedIds().includes(id);
+}
+function unlockAdminByPassword(){
+  const typed=document.getElementById('unlock-admin-pw').value.trim();
+  if(!typed){toast('Digite a senha de admin','err');return;}
+  const match=Object.keys(ALL_BOLOES).find(id=>ALL_BOLOES[id].adminSenha===typed);
+  if(!match){toast('Senha de admin não corresponde a nenhum bolão','err');return;}
+  grantAdminAccess(match, typed);
+  document.getElementById('unlock-admin-pw').value='';
+  renderAdminBoloesList();
+  toast(`Acesso de admin liberado para "${ALL_BOLOES[match].nome}"!`);
+}
+
+// Deleting a bolão is only reachable from inside the admin card — getting
+// there already proved the person knows that bolão's admin password, so we
+// don't ask for it a second time, just a clear confirmation since it's permanent.
+function deleteBolao(id){
+  const b=ALL_BOLOES[id];
+  if(!b)return;
+  askConfirm(`Excluir "${b.nome}" para sempre? Todos os jogos, palpites e participantes serão perdidos. Essa ação não pode ser desfeita.`,()=>{
+    DB.deleteBolao(id).then(()=>{
+      // clean up local traces of this bolão so it doesn't linger in any list
+      const adminIds=getAdminUnlockedIds().filter(x=>x!==id);
+      localStorage.setItem('bolao_admin_unlocked', JSON.stringify(adminIds));
+      const myMap=getMyBoloesMap(); delete myMap[id];
+      localStorage.setItem('bolao_my_boloes', JSON.stringify(myMap));
+      if(currentBoloId===id){
+        currentBoloId=null;
+        localStorage.removeItem('bolao_active_id');
+        updateActiveBolaoUI();
+      }
+      renderAdminBoloesList();
+      toast(`"${b.nome}" foi excluído`,'inf');
+    }).catch(err=>{
+      console.error(err);
+      toast('Erro ao excluir — verifique sua conexão','err');
+    });
   });
 }
 
@@ -773,6 +1423,29 @@ function getRes(m){return m.res||null}
 function isExactWinner(bet,res){
   if(!res)return null;
   return bet===res;
+}
+
+// bets are stored per-player as an ARRAY of scores, so one person can place
+// more than one bet on the same match. Old data (a single string) is
+// transparently treated as an array of length 1.
+function betsOf(matchId,name){
+  const raw=ST.bets[matchId]?.[name];
+  if(!raw)return[];
+  return Array.isArray(raw)?raw:[raw];
+}
+function totalBetsInMatch(matchId){
+  const obj=ST.bets[matchId]||{};
+  // only count bets from people still listed as participants — this keeps the
+  // total always equal to what's actually shown in the bettors list, even if
+  // older/stale data has orphaned entries from a removed player
+  return Object.keys(obj)
+    .filter(name=>ST.players.includes(name))
+    .reduce((acc,name)=>acc+betsOf(matchId,name).length,0);
+}
+function totalBetsAllMatches(){
+  let tb=0;
+  ST.matches.forEach(m=>{tb+=totalBetsInMatch(m.id);});
+  return tb;
 }
 
 function tagHtml(status){
@@ -803,23 +1476,19 @@ function flagFallback(img){
 
 // ── TABS ─────────────────────────────────────────────────
 function go(pg,btn){
+  // 'detalhe' needs an active bolão selected; 'admin' and 'meus' do not —
+  // they list things across all bolões this browser knows about
+  if(pg==='detalhe' && !currentBoloId){
+    toast('Escolha um bolão primeiro','err');
+    pg='boloes';
+  }
   document.querySelectorAll('.pg').forEach(e=>e.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(e=>e.classList.remove('on'));
   document.getElementById('pg-'+pg).classList.add('on');
   if(btn)btn.classList.add('on');
-  if(pg==='admin')chkAccess();
+  if(pg==='admin')renderAdminBoloesList();
+  if(pg==='meus')renderMeusBoloesList();
   render();
-}
-
-// ── ADMIN ─────────────────────────────────────────────────
-function chkAccess(){
-  document.getElementById('aw').style.display=adminOn?'none':'block';
-  document.getElementById('ac').style.display=adminOn?'flex':'none';
-  if(adminOn){document.getElementById('ac').style.flexDirection='column';document.getElementById('ac').style.gap='.875rem';}
-}
-function chkpw(){
-  if(document.getElementById('apw').value===ADMIN_PW){adminOn=true;chkAccess();render();toast('Acesso liberado!');}
-  else toast('Senha incorreta','err');
 }
 
 // ── TOAST ──────────────────────────────────────────────
@@ -837,18 +1506,19 @@ function toast(msg,type='ok'){
 }
 
 // ── RENDER ────────────────────────────────────────────────
-const VALOR_PALPITE=10; // R$ por palpite cadastrado
+function valorPalpite(){ return CB().valor || 10; }
 
 function render(){
-  rStats();rRecent();rHomeGames();rAllGames();
-  if(adminOn){rAdminMatches();rPlayers();fillSelects();}
+  if(currentBoloId){ rStats();rRecent();rHomeGames(); }
+  // the admin page renders itself independently via renderAdminBoloesList(),
+  // called from go('admin', ...) and from every per-bolão admin action
 }
 
 function rStats(){
-  let tb=0;ST.matches.forEach(m=>{tb+=Object.keys(ST.bets[m.id]||{}).length});
+  const tb=totalBetsAllMatches();
   document.getElementById('s-p').textContent=ST.players.length;
   document.getElementById('s-b').textContent=tb;
-  const prize=tb*VALOR_PALPITE;
+  const prize=tb*valorPalpite();
   document.getElementById('s-prize').textContent='R$ '+prize.toLocaleString('pt-BR');
 }
 
@@ -862,12 +1532,6 @@ function rRecent(){
 function rHomeGames(){
   const el=document.getElementById('home-games');if(!el)return;
   if(!ST.matches.length){el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10"/><path d="M2 12h20"/></svg>Nenhum jogo cadastrado ainda. O admin vai criar em breve!</div>';return;}
-  el.innerHTML=ST.matches.map(m=>mcHtml(m,'list')).join('');
-}
-
-function rAllGames(){
-  const el=document.getElementById('all-games');if(!el)return;
-  if(!ST.matches.length){el.innerHTML='<div class="gc gc-pad empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:#cbd5e1;display:block;margin:0 auto .75rem"><circle cx="12" cy="12" r="10"/></svg>Nenhum jogo ainda</div>';return;}
   el.innerHTML=ST.matches.map(m=>mcHtml(m,'list')).join('');
 }
 
@@ -926,23 +1590,36 @@ function mcHtml(m,mode){
     </button>`;
   }
 
-  const bettors=ST.players.filter(p=>ST.bets[m.id]?.[p]);
+  const bettorNames=ST.players.filter(p=>betsOf(m.id,p).length>0);
+  const valor=valorPalpite();
 
-  const rows=bettors.map(p=>{
-    const b=ST.bets[m.id][p];
-    const status=isExactWinner(b,res);
-    return`<div class="palp-row${status===true?' winner':''}">
-      <div class="palp-av" style="background:${avColor(p)}">${ini(p)}</div>
-      <div class="palp-name">${p}${status===true?` <span class="palp-trophy">${trophySvg}</span>`:''}</div>
-      <div class="palp-sc">${b}</div>
-      ${tagHtml(status)}
-    </div>`;
+  const rows=bettorNames.flatMap(p=>{
+    const list=betsOf(m.id,p);
+    return list.map((b,idx)=>{
+      const status=isExactWinner(b,res);
+      const numberTag=list.length>1?`<span class="bet-number-tag">#${idx+1}</span>`:'';
+      return`<div class="palp-row${status===true?' winner':''}">
+        <div class="palp-av" style="background:${avColor(p)}">${ini(p)}</div>
+        <div class="palp-name">${p}${numberTag}${status===true?` <span class="palp-trophy">${trophySvg}</span>`:''}</div>
+        <div class="palp-sc">${b}</div>
+        <span class="bet-value-chip">R$ ${valor.toLocaleString('pt-BR')}</span>
+        ${tagHtml(status)}
+      </div>`;
+    });
   }).join('');
+
+  const totalBetsCount=bettorNames.reduce((acc,p)=>acc+betsOf(m.id,p).length,0);
 
   const emptyList=`<div class="empty" style="padding:1.5rem 1rem">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
     Nenhum palpite ainda. Seja o primeiro!
   </div>`;
+
+  const totalJogo=totalBetsCount*valor;
+  const totalFooter=totalBetsCount?`<div class="palps-total-footer">
+    <span>Total acumulado neste jogo</span>
+    <span class="palps-total-footer-n">R$ ${totalJogo.toLocaleString('pt-BR')}</span>
+  </div>`:'';
 
   return`<div class="mc${lk?' lk':''}">
     ${headerHtml}
@@ -950,22 +1627,105 @@ function mcHtml(m,mode){
       <div class="palps-hd-main">
         <div class="palps-hd-lbl">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          Palpiteiros <span class="palps-count">${bettors.length}</span>
+          Palpiteiros <span class="palps-count">${totalBetsCount}</span>
         </div>
         ${smallCta}
       </div>
       <div style="display:flex;flex-direction:column;gap:.375rem">${rows||emptyList}</div>
+      ${totalFooter}
     </div>
   </div>`;
 }
 
-function rAdminMatches(){
-  const el=document.getElementById('aml');if(!el)return;
-  if(!ST.matches.length){el.innerHTML='<div style="color:var(--muted);font-size:13px">Nenhum jogo cadastrado</div>';return;}
-  el.innerHTML=ST.matches.map((m,i)=>{
+// ── HELPERS: mutate any bolão directly by id, regardless of which one is "active" ──
+function bolaoOf(id){ return ALL_BOLOES[id]; }
+function persistBolao(id, partial){
+  if(!ALL_BOLOES[id])return;
+  Object.assign(ALL_BOLOES[id], partial);
+  DB.updateBolao(id, partial).catch(err=>{
+    console.error('Save error:', err);
+    toast('Erro ao salvar — verifique sua conexão','err');
+  });
+  // if this is also the globally "active" bolão, keep ST in sync so the
+  // Home/Jogos pages reflect the change immediately without a re-select
+  if(id===currentBoloId){
+    const b=ALL_BOLOES[id];
+    ST={players:b.players||[],matches:b.matches||[],bets:b.bets||{}};
+  }
+}
+
+// ── ADMIN PAGE: one expandable card per bolão this browser administers ──
+function renderAdminBoloesList(){
+  const el=document.getElementById('admin-boloes-list');
+  if(!el)return;
+  const ids=Object.keys(ALL_BOLOES).filter(isAdminOf);
+  if(!ids.length){
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Você ainda não administra nenhum bolão. Crie um na aba Bolões, ou destrave um existente com a senha de admin acima.</div>`;
+    return;
+  }
+  el.innerHTML=ids.map(id=>adminBolaoCardHtml(id)).join('');
+  // populate each card's team selects
+  ids.forEach(id=>fillSelectsFor(id));
+}
+
+function adminBolaoCardHtml(id){
+  const b=ALL_BOLOES[id];
+  const matches=b.matches||[];
+  const players=b.players||[];
+  return `<div class="gc gc-pad" style="margin-bottom:1rem">
+    <div class="sh" style="padding:0 0 .875rem">
+      <div class="sh-ico" style="background:linear-gradient(135deg,#0033A0,#1a56d6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+      </div>
+      <div style="flex:1"><div class="sh-t">${b.nome}</div><div class="sh-s">R$ ${(b.valor||10).toLocaleString('pt-BR')} por palpite · ${players.length} participante${players.length!==1?'s':''}</div></div>
+      <button class="btn-dd" onclick="deleteBolao('${id}')" title="Excluir este bolão">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        Excluir Bolão
+      </button>
+    </div>
+
+    <div class="fgrid" style="margin-bottom:.875rem">
+      <div class="fg"><label class="fl">Time da Casa</label><select class="fs" id="th-${id}"></select></div>
+      <div class="fg"><label class="fl">Time Visitante</label><select class="fs" id="ta-${id}"></select></div>
+      <div class="fg"><label class="fl">Fase / Grupo</label>
+        <select class="fs" id="ph-${id}">
+          <option>Fase de Grupos – Grupo A</option><option>Fase de Grupos – Grupo B</option><option>Fase de Grupos – Grupo C</option><option>Fase de Grupos – Grupo D</option><option>Fase de Grupos – Grupo E</option><option>Fase de Grupos – Grupo F</option><option>Fase de Grupos – Grupo G</option><option>Fase de Grupos – Grupo H</option><option>Fase de Grupos – Grupo I</option><option>Fase de Grupos – Grupo J</option><option>Fase de Grupos – Grupo K</option><option>Fase de Grupos – Grupo L</option><option>Oitavas de Final</option><option>Quartas de Final</option><option>Semifinal</option><option>Disputa de 3º Lugar</option><option>Final</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Data e hora limite para palpites</label>
+        <input type="datetime-local" class="fi" id="dl-${id}">
+      </div>
+    </div>
+    <button class="btn-p" onclick="addMatchTo('${id}')" style="margin-bottom:1.125rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Cadastrar Jogo neste Bolão
+    </button>
+
+    <div class="dl" style="margin-bottom:.875rem"></div>
+    <div class="palps-hd-lbl" style="margin-bottom:.625rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Jogos deste bolão
+    </div>
+    <div class="stack" id="aml-${id}" style="margin-bottom:1.125rem">${adminMatchesHtml(id)}</div>
+
+    <div class="dl" style="margin-bottom:.875rem"></div>
+    <div class="palps-hd-lbl" style="margin-bottom:.625rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      Participantes
+    </div>
+    <div id="plist-${id}" style="display:flex;flex-wrap:wrap;gap:.5rem">${adminPlayersHtml(id)}</div>
+  </div>`;
+}
+
+function adminMatchesHtml(id){
+  const b=ALL_BOLOES[id];
+  const matches=b.matches||[];
+  if(!matches.length)return '<div style="color:var(--muted);font-size:13px">Nenhum jogo cadastrado ainda</div>';
+  return matches.map((m,i)=>{
     const h=team(m.home),a=team(m.away);
     const dl=new Date(m.dl).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-    const r=getRes(m);
+    const r=m.res||null;
     const[rh,ra]=r?r.split(':'):['',''];
     return`<div class="amr">
       <div style="display:flex;gap:4px">${flagHtml(m.home,26,17,4)}${flagHtml(m.away,26,17,4)}</div>
@@ -973,17 +1733,17 @@ function rAdminMatches(){
       <div class="amr-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${dl} · ${m.ph}</div>
       <div class="amr-act">
         <div style="display:flex;align-items:center;gap:4px">
-          <input class="ri" type="number" min="0" max="20" id="rh-${i}" placeholder="0" value="${rh}">
+          <input class="ri" type="number" min="0" max="20" id="rh-${id}-${i}" placeholder="0" value="${rh}">
           <span class="rsep">×</span>
-          <input class="ri" type="number" min="0" max="20" id="ra-${i}" placeholder="0" value="${ra}">
-          <button class="btn-ok" onclick="setRes(${i})">
+          <input class="ri" type="number" min="0" max="20" id="ra-${id}-${i}" placeholder="0" value="${ra}">
+          <button class="btn-ok" onclick="setResFor('${id}',${i})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg>${r?'Atualizar':'Confirmar'}
           </button>
-          ${r?`<button class="btn-dd" onclick="clearRes(${i})" title="Apagar resultado oficial">
+          ${r?`<button class="btn-dd" onclick="clearResFor('${id}',${i})" title="Apagar resultado oficial">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Limpar
           </button>`:''}
         </div>
-        <button class="btn-dd" onclick="delMatch(${i})">
+        <button class="btn-dd" onclick="delMatchFrom('${id}',${i})">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>Remover jogo
         </button>
       </div>
@@ -991,68 +1751,109 @@ function rAdminMatches(){
   }).join('');
 }
 
-function rPlayers(){
-  const el=document.getElementById('plist');if(!el)return;
-  if(!ST.players.length){el.innerHTML='<div style="font-size:13px;color:var(--muted)">Nenhum participante. As pessoas entram ao enviar o primeiro palpite.</div>';return;}
-  el.innerHTML=ST.players.map((p,i)=>`
+function adminPlayersHtml(id){
+  const b=ALL_BOLOES[id];
+  const players=b.players||[];
+  if(!players.length)return '<div style="font-size:13px;color:var(--muted)">Nenhum participante. As pessoas entram ao enviar o primeiro palpite.</div>';
+  return players.map((p,i)=>`
     <div class="pc">
       <div class="palp-av" style="background:${avColor(p)};width:22px;height:22px;font-size:9px">${ini(p)}</div>
       <span class="pc-nm">${p}</span>
-      <button class="pc-x" onclick="delPlayer(${i})">
+      <button class="pc-x" onclick="delPlayerFrom('${id}',${i})">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>`).join('');
 }
 
-function fillSelects(){
-  ['th','ta'].forEach(id=>{
-    const s=document.getElementById(id);if(!s)return;
-    const v=s.value;
+function fillSelectsFor(id){
+  ['th-'+id,'ta-'+id].forEach(domId=>{
+    const s=document.getElementById(domId);if(!s)return;
     s.innerHTML='<option value="">Selecionar seleção...</option>'+
       [...TEAMS].sort((a,b)=>a.n.localeCompare(b.n,'pt')).map(t=>`<option value="${t.c}">${t.n}</option>`).join('');
-    if(v)s.value=v;
   });
 }
 
-// ── ACTIONS ──────────────────────────────────────────────
-function addMatch(){
-  const h=document.getElementById('th').value,a=document.getElementById('ta').value,
-        ph=document.getElementById('ph').value,dl=document.getElementById('dl').value;
+// ── ACTIONS (per-bolão, explicit id — never relies on "current" bolão) ──
+function addMatchTo(id){
+  const h=document.getElementById(`th-${id}`).value, a=document.getElementById(`ta-${id}`).value,
+        ph=document.getElementById(`ph-${id}`).value, dl=document.getElementById(`dl-${id}`).value;
   if(!h||!a||!dl){toast('Preencha todos os campos','err');return;}
   if(h===a){toast('Escolha seleções diferentes','err');return;}
+  const b=ALL_BOLOES[id];
   const m={id:Date.now()+'',home:h,away:a,ph,dl,res:null};
-  ST.matches.push(m);ST.bets[m.id]={};save();render();
-  document.getElementById('th').value='';document.getElementById('ta').value='';document.getElementById('dl').value='';
-  toast(`${team(h).n} × ${team(a).n} cadastrado!`);
+  const matches=(b.matches||[]).concat([m]);
+  const bets=Object.assign({},b.bets||{},{[m.id]:{}});
+  persistBolao(id,{matches,bets});
+  renderAdminBoloesList();
+  render();
+  document.getElementById(`th-${id}`).value='';document.getElementById(`ta-${id}`).value='';document.getElementById(`dl-${id}`).value='';
+  toast(`${team(h).n} × ${team(a).n} cadastrado em "${b.nome}"!`);
 }
 
-function delMatch(i){
+function delMatchFrom(id,i){
   askConfirm('Remover este jogo e todos os palpites?',()=>{
-    const m=ST.matches.splice(i,1)[0];delete ST.bets[m.id];
-    save();render();toast('Jogo removido','inf');
+    const b=ALL_BOLOES[id];
+    const matches=(b.matches||[]).slice();
+    const removed=matches.splice(i,1)[0];
+    const bets=Object.assign({},b.bets||{});
+    if(removed)delete bets[removed.id];
+    persistBolao(id,{matches,bets});
+    renderAdminBoloesList();
+    render();
+    toast('Jogo removido','inf');
   });
 }
 
-function setRes(i){
-  const m=ST.matches[i];
-  const h=document.getElementById(`rh-${i}`)?.value,a=document.getElementById(`ra-${i}`)?.value;
+function setResFor(id,i){
+  const b=ALL_BOLOES[id];
+  const h=document.getElementById(`rh-${id}-${i}`)?.value, a=document.getElementById(`ra-${id}-${i}`)?.value;
   if(h===''||a===''){toast('Insira o placar completo','err');return;}
-  m.res=`${h}:${a}`;save();render();toast(`Resultado ${m.res} registrado!`);
+  const matches=(b.matches||[]).slice();
+  matches[i]={...matches[i], res:`${h}:${a}`};
+  persistBolao(id,{matches});
+  renderAdminBoloesList();
+  render();
+  toast(`Resultado ${h}:${a} registrado!`);
 }
 
-function clearRes(i){
+function clearResFor(id,i){
   askConfirm('Apagar o resultado oficial deste jogo?',()=>{
-    ST.matches[i].res=null;save();render();toast('Resultado oficial apagado','inf');
+    const b=ALL_BOLOES[id];
+    const matches=(b.matches||[]).slice();
+    matches[i]={...matches[i], res:null};
+    persistBolao(id,{matches});
+    renderAdminBoloesList();
+    render();
+    toast('Resultado oficial apagado','inf');
   });
 }
 
-function delPlayer(i){
-  askConfirm(`Remover ${ST.players[i]}?`,()=>{
-    ST.players.splice(i,1);save();render();toast('Participante removido','inf');
+function delPlayerFrom(id,i){
+  const b=ALL_BOLOES[id];
+  const name=(b.players||[])[i];
+  askConfirm(`Remover ${name}? Todos os palpites dessa pessoa também serão apagados.`,()=>{
+    const players=(b.players||[]).slice();
+    players.splice(i,1);
+    // clean up every bet this person placed, in every match of THIS bolão —
+    // otherwise a "ghost" entry keeps being counted in totals forever
+    const bets=Object.assign({},b.bets||{});
+    Object.keys(bets).forEach(matchId=>{
+      if(bets[matchId] && bets[matchId][name]){
+        bets[matchId]=Object.assign({},bets[matchId]);
+        delete bets[matchId][name];
+      }
+    });
+    persistBolao(id,{players,bets});
+    renderAdminBoloesList();
+    render();
+    toast('Participante e seus palpites removidos','inf');
   });
 }
+
 
 let currentBetMatchId=null;
+let betQty=1;
+const MAX_BET_QTY=10;
 
 function openBetModal(mid){
   const m=ST.matches.find(x=>x.id===mid);if(!m)return;
@@ -1066,21 +1867,51 @@ function openBetModal(mid){
     <div class="modal-team">${flagHtml(m.away,50,34,7)}<div class="modal-tname">${away.n}</div></div>
   `;
 
-  // pre-fill if the last-used name already has a bet on this match
+  // pre-fill if the last-used name already has bets on this match
   const lastName=localStorage.getItem('bolao_last_name')||'';
-  const existing=lastName?ST.bets[mid]?.[lastName]:null;
   document.getElementById('modal-bn').value=lastName;
-  if(existing){
-    const[h,a]=existing.split(':');
-    document.getElementById('modal-bh').value=h;
-    document.getElementById('modal-ba').value=a;
-  } else {
-    document.getElementById('modal-bh').value='';
-    document.getElementById('modal-ba').value='';
-  }
+  const existing=lastName?betsOf(mid,lastName):[];
+
+  betQty = existing.length>0 ? existing.length : 1;
+  renderBetQtyAndFields(existing);
 
   document.getElementById('bet-modal').classList.add('on');
   setTimeout(()=>document.getElementById('modal-bn').focus(),150);
+}
+
+function renderBetQtyAndFields(prefill){
+  prefill = prefill||[];
+  document.getElementById('bet-qty-display').textContent=betQty;
+  document.getElementById('bet-submit-plural').textContent = betQty>1?` (${betQty})`:'';
+  const wrap=document.getElementById('bet-score-fields');
+  let html='';
+  for(let i=0;i<betQty;i++){
+    const[ph,pa]=(prefill[i]||'').split(':');
+    html+=`<div class="score-entry-row">
+      ${betQty>1?`<span class="score-entry-num">${i+1}</span>`:''}
+      <input class="modal-si" type="number" min="0" max="20" placeholder="0" id="bet-sh-${i}" value="${ph||''}" style="flex:1">
+      <span class="modal-sep">×</span>
+      <input class="modal-si" type="number" min="0" max="20" placeholder="0" id="bet-sa-${i}" value="${pa||''}" style="flex:1">
+    </div>`;
+  }
+  wrap.innerHTML=html;
+}
+
+function changeBetQty(delta){
+  const newQty=betQty+delta;
+  if(newQty<1||newQty>MAX_BET_QTY){
+    if(newQty>MAX_BET_QTY)toast(`Máximo de ${MAX_BET_QTY} palpites por vez`,'err');
+    return;
+  }
+  // preserve whatever the user already typed in the visible fields
+  const current=[];
+  for(let i=0;i<betQty;i++){
+    const h=document.getElementById(`bet-sh-${i}`)?.value||'';
+    const a=document.getElementById(`bet-sa-${i}`)?.value||'';
+    current.push(h||a?`${h}:${a}`:'');
+  }
+  betQty=newQty;
+  renderBetQtyAndFields(current);
 }
 
 function closeBetModal(){
@@ -1092,23 +1923,92 @@ function confirmBet(){
   const mid=currentBetMatchId;if(!mid)return;
   const m=ST.matches.find(x=>x.id===mid);if(!m)return;
   if(isLocked(m)){toast('Prazo encerrado!','err');closeBetModal();return;}
-  const h=document.getElementById('modal-bh').value;
-  const a=document.getElementById('modal-ba').value;
   const name=document.getElementById('modal-bn').value.trim();
   if(!name){toast('Digite seu nome','err');return;}
-  if(h===''||a===''||isNaN(+h)||isNaN(+a)){toast('Insira um placar válido','err');return;}
+
+  const scores=[];
+  for(let i=0;i<betQty;i++){
+    const h=document.getElementById(`bet-sh-${i}`)?.value;
+    const a=document.getElementById(`bet-sa-${i}`)?.value;
+    if(h===''||a===''||h==null||a==null||isNaN(+h)||isNaN(+a)){
+      toast(betQty>1?`Preencha o placar #${i+1}`:'Insira um placar válido','err');
+      return;
+    }
+    scores.push(`${h}:${a}`);
+  }
+
   if(!ST.bets[mid])ST.bets[mid]={};
-  ST.bets[mid][name]=`${h}:${a}`;
+  ST.bets[mid][name]=scores; // always stored as an array, even when length 1
   if(!ST.players.includes(name))ST.players.push(name);
   localStorage.setItem('bolao_last_name',name);
+  rememberMyBolao(currentBoloId, name);
   save();render();closeBetModal();
-  toast(`Palpite ${h}×${a} salvo, ${name}!`);
+  toast(scores.length>1?`${scores.length} palpites salvos, ${name}!`:`Palpite ${scores[0]} salvo, ${name}!`);
+}
+
+// ── "MEUS BOLÕES" tracking ─────────────────────────────────────────
+// Remembers, per browser, which bolões this person has placed a bet in
+// (and under which name), so the "Meus Bolões" tab can list them even
+// without any login system.
+function getMyBoloesMap(){
+  return JSON.parse(localStorage.getItem('bolao_my_boloes')||'{}'); // {boloId: name}
+}
+function rememberMyBolao(boloId, name){
+  if(!boloId)return;
+  const map=getMyBoloesMap();
+  map[boloId]=name;
+  localStorage.setItem('bolao_my_boloes', JSON.stringify(map));
+}
+function renderMeusBoloesList(){
+  const el=document.getElementById('meus-boloes-list');
+  if(!el)return;
+  const map=getMyBoloesMap();
+  const ids=Object.keys(map).filter(id=>ALL_BOLOES[id]);
+  if(!ids.length){
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Você ainda não registrou nenhum palpite. Entre num bolão na aba "Bolões" e palpite em um jogo!</div>`;
+    return;
+  }
+  const trophySvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>`;
+  el.innerHTML=ids.map(id=>{
+    const b=ALL_BOLOES[id];
+    const myName=map[id];
+    const numJogos=Object.keys(b.matches||{}).length;
+    const myBetsCount=Object.values(b.bets||{}).filter(obj=>obj && obj[myName]).length;
+    return `<div class="bolao-card" onclick="openMyBolao('${id}')">
+      <div class="bolao-card-bar"></div>
+      <div class="bolao-card-hd">
+        <div class="bolao-card-icon">${trophySvg}</div>
+        <div>
+          <div class="bolao-card-name">${b.nome}</div>
+          <div class="bolao-card-meta">Você entrou como <strong>${myName}</strong></div>
+        </div>
+      </div>
+      <div class="bolao-card-stats">
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${(b.players||[]).length}</div><div class="bolao-stat-chip-l">Pessoas</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numJogos}</div><div class="bolao-stat-chip-l">Jogos</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${myBetsCount}</div><div class="bolao-stat-chip-l">Seus Palpites</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function openMyBolao(id){
+  activateBolao(id);
+}
+
+// ── SPLASH WELCOME SCREEN ────────────────────────────────
+function closeSplash(){
+  localStorage.setItem('bolao_splash_seen','1');
+  const ov=document.getElementById('splash-overlay');
+  if(ov)ov.classList.add('hidden');
+}
+if(localStorage.getItem('bolao_splash_seen')){
+  const ov=document.getElementById('splash-overlay');
+  if(ov)ov.classList.add('hidden');
 }
 
 // ── INIT ─────────────────────────────────────────────────
-chkAccess();
-fillSelects();
-// initial render() happens automatically once dataRef.on('value', ...) fires above
+// page auto-navigates to 'meus' on first load if a remembered bolão still
+// exists — handled inside onBoloesUpdate() once DB.init() resolves, above
 setInterval(render,60000); // keeps "Prazo encerrado" status fresh even with no new data
 </script>
 </body>
