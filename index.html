@@ -1237,7 +1237,7 @@ function renderBoloesList(){
         </div>
       </div>
       <div class="bolao-card-stats">
-        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${(b.players||[]).length}</div><div class="bolao-stat-chip-l">Pessoas</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numPalpites}</div><div class="bolao-stat-chip-l">Palpites</div></div>
         <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numJogos}</div><div class="bolao-stat-chip-l">Jogos</div></div>
         <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">R$${totalArrecadado.toLocaleString('pt-BR')}</div><div class="bolao-stat-chip-l">Total</div></div>
       </div>
@@ -1732,6 +1732,9 @@ function adminMatchesHtml(id){
     const dl=new Date(m.dl).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
     const r=m.res||null;
     const[rh,ra]=r?r.split(':'):['',''];
+    const expanded=_adminExpandedMatches.has(`${id}:${m.id}`);
+    const bettorRows=adminBettorRowsHtml(id,m.id,r);
+    const totalBets=adminBetsOf(id,m.id,null,true);
     return`<div class="amr">
       <div style="display:flex;gap:4px">${flagHtml(m.home,26,17,4)}${flagHtml(m.away,26,17,4)}</div>
       <div class="amr-teams">${h.n} × ${a.n}</div>
@@ -1752,8 +1755,130 @@ function adminMatchesHtml(id){
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>Remover jogo
         </button>
       </div>
+      <div style="width:100%;border-top:1px dashed rgba(0,51,160,.1);padding-top:.625rem;margin-top:.375rem">
+        <button onclick="toggleAdminMatchExpand('${id}','${m.id}')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--blue);font-family:'Inter',sans-serif;font-size:11px;font-weight:700">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;transition:transform .15s;${expanded?'transform:rotate(90deg)':''}"><polyline points="9 18 15 12 9 6"/></svg>
+          ${totalBets} palpite${totalBets!==1?'s':''} neste jogo ${expanded?'— ocultar':'— ver e editar'}
+        </button>
+        ${expanded?`<div style="display:flex;flex-direction:column;gap:6px;margin-top:.625rem">${bettorRows}</div>`:''}
+      </div>
     </div>`;
   }).join('');
+}
+
+// which (boloId:matchId) admin match rows are currently expanded to show
+// the editable bettor list — kept outside ALL_BOLOES so it survives re-renders
+const _adminExpandedMatches=new Set();
+function toggleAdminMatchExpand(id,matchId){
+  const key=`${id}:${matchId}`;
+  if(_adminExpandedMatches.has(key))_adminExpandedMatches.delete(key);
+  else _adminExpandedMatches.add(key);
+  renderAdminBoloesList();
+}
+
+// reads directly from ALL_BOLOES[id] (never from the globally "active" ST),
+// since the admin panel can be operating on a bolão that isn't the active one
+function adminBetsOf(id,matchId,name,countOnly){
+  const b=ALL_BOLOES[id];
+  const obj=(b&&b.bets&&b.bets[matchId])||{};
+  if(countOnly){
+    return Object.keys(obj).reduce((acc,n)=>{
+      const raw=obj[n];
+      return acc+(raw?(Array.isArray(raw)?raw.length:1):0);
+    },0);
+  }
+  const raw=obj[name];
+  if(!raw)return[];
+  return Array.isArray(raw)?raw:[raw];
+}
+
+function adminBettorRowsHtml(id,matchId,res){
+  const b=ALL_BOLOES[id];
+  const players=b.players||[];
+  const rows=players.flatMap(p=>adminBetsOf(id,matchId,p).map((score,betIdx)=>({p,score,betIdx})));
+  if(!rows.length)return '<div style="font-size:12px;color:var(--muted)">Nenhum palpite registrado ainda neste jogo.</div>';
+  const trophySvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>`;
+  return rows.map(({p,score,betIdx})=>{
+    const status=isExactWinner(score,res);
+    const rowKey=`${id}-${matchId}-${p}-${betIdx}`.replace(/[^a-zA-Z0-9_-]/g,'_');
+    const[sh,sa]=score.split(':');
+    const winnerStyle=status===true?'background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.3)':'';
+    return `<div class="palp-row" id="abr-${rowKey}" style="${winnerStyle}flex-wrap:wrap">
+      <div class="palp-av" style="background:${avColor(p)};width:24px;height:24px;font-size:9px">${ini(p)}</div>
+      <span class="palp-name" style="font-size:12.5px">${p}${status===true?` ${trophySvg}`:''}</span>
+      <span class="palp-sc" id="abr-score-${rowKey}" style="font-size:18px">${score}</span>
+      <span id="abr-edit-${rowKey}" style="display:none;align-items:center;gap:6px">
+        <input class="ri" type="number" min="0" max="20" id="abr-eh-${rowKey}" value="${sh}" style="width:34px;height:28px;font-size:14px">
+        <span class="rsep" style="font-size:14px">×</span>
+        <input class="ri" type="number" min="0" max="20" id="abr-ea-${rowKey}" value="${sa}" style="width:34px;height:28px;font-size:14px">
+      </span>
+      <span style="display:flex;align-items:center;gap:6px;margin-left:auto">
+        <button id="abr-editbtn-${rowKey}" class="btn-p" style="padding:5px 10px;font-size:10px" onclick="startEditBet('${id}','${matchId}','${p.replace(/'/g,"\\'")}',${betIdx},'${rowKey}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Editar
+        </button>
+        <button id="abr-savebtn-${rowKey}" class="btn-ok" style="display:none;padding:5px 10px;font-size:10px" onclick="saveEditBet('${id}','${matchId}','${p.replace(/'/g,"\\'")}',${betIdx},'${rowKey}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><polyline points="20 6 9 17 4 12"/></svg>Salvar
+        </button>
+        <button id="abr-cancelbtn-${rowKey}" class="btn-dd" style="display:none;padding:5px 10px;font-size:10px" onclick="cancelEditBet('${rowKey}')">Cancelar</button>
+        <button id="abr-delbtn-${rowKey}" class="btn-dd" style="padding:5px 10px;font-size:10px" onclick="deleteBetFrom('${id}','${matchId}','${p.replace(/'/g,"\\'")}',${betIdx})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>Excluir
+        </button>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+function startEditBet(id,matchId,name,betIdx,rowKey){
+  document.getElementById(`abr-score-${rowKey}`).style.display='none';
+  document.getElementById(`abr-edit-${rowKey}`).style.display='inline-flex';
+  document.getElementById(`abr-editbtn-${rowKey}`).style.display='none';
+  document.getElementById(`abr-savebtn-${rowKey}`).style.display='inline-flex';
+  document.getElementById(`abr-cancelbtn-${rowKey}`).style.display='inline-flex';
+  document.getElementById(`abr-delbtn-${rowKey}`).style.display='none';
+}
+function cancelEditBet(rowKey){
+  document.getElementById(`abr-score-${rowKey}`).style.display='inline';
+  document.getElementById(`abr-edit-${rowKey}`).style.display='none';
+  document.getElementById(`abr-editbtn-${rowKey}`).style.display='inline-flex';
+  document.getElementById(`abr-savebtn-${rowKey}`).style.display='none';
+  document.getElementById(`abr-cancelbtn-${rowKey}`).style.display='none';
+  document.getElementById(`abr-delbtn-${rowKey}`).style.display='inline-flex';
+}
+function saveEditBet(id,matchId,name,betIdx,rowKey){
+  const eh=document.getElementById(`abr-eh-${rowKey}`)?.value;
+  const ea=document.getElementById(`abr-ea-${rowKey}`)?.value;
+  if(eh===''||ea===''||eh==null||ea==null||isNaN(+eh)||isNaN(+ea)){toast('Insira um placar válido','err');return;}
+  const newScore=`${eh}:${ea}`;
+  const b=ALL_BOLOES[id];
+  const bets=Object.assign({},b.bets||{});
+  const matchBets=Object.assign({},bets[matchId]||{});
+  const list=adminBetsOf(id,matchId,name).slice();
+  if(betIdx<0||betIdx>=list.length)return;
+  list[betIdx]=newScore;
+  matchBets[name]=list;
+  bets[matchId]=matchBets;
+  persistBolao(id,{bets});
+  renderAdminBoloesList();
+  render();
+  toast(`Palpite de ${name} atualizado para ${newScore}`);
+}
+function deleteBetFrom(id,matchId,name,betIdx){
+  const list=adminBetsOf(id,matchId,name);
+  if(betIdx<0||betIdx>=list.length)return;
+  const score=list[betIdx];
+  askConfirm(`Excluir o palpite "${score}" de ${name} neste jogo?`,()=>{
+    const b=ALL_BOLOES[id];
+    const bets=Object.assign({},b.bets||{});
+    const matchBets=Object.assign({},bets[matchId]||{});
+    const newList=list.filter((_,idx)=>idx!==betIdx);
+    if(newList.length>0)matchBets[name]=newList;
+    else delete matchBets[name];
+    bets[matchId]=matchBets;
+    persistBolao(id,{bets});
+    renderAdminBoloesList();
+    render();
+    toast('Palpite excluído','inf');
+  });
 }
 
 function adminPlayersHtml(id){
@@ -1978,6 +2103,9 @@ function renderMeusBoloesList(){
     const b=ALL_BOLOES[id];
     const myName=map[id];
     const numJogos=Object.keys(b.matches||{}).length;
+    const numPalpites=Object.values(b.bets||{}).reduce((acc,playerBets)=>{
+      return acc+Object.values(playerBets||{}).reduce((a2,raw)=>a2+(Array.isArray(raw)?raw.length:1),0);
+    },0);
     const myBetsCount=Object.values(b.bets||{}).reduce((acc,playerBets)=>{
       const raw=playerBets&&playerBets[myName];
       if(!raw)return acc;
@@ -1993,7 +2121,7 @@ function renderMeusBoloesList(){
         </div>
       </div>
       <div class="bolao-card-stats">
-        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${(b.players||[]).length}</div><div class="bolao-stat-chip-l">Pessoas</div></div>
+        <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numPalpites}</div><div class="bolao-stat-chip-l">Palpites</div></div>
         <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${numJogos}</div><div class="bolao-stat-chip-l">Jogos</div></div>
         <div class="bolao-stat-chip"><div class="bolao-stat-chip-n">${myBetsCount}</div><div class="bolao-stat-chip-l">Seus Palpites</div></div>
       </div>
