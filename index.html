@@ -321,7 +321,8 @@ header{position:sticky;top:0;z-index:100;
 .palp-row:not(.winner){background:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.62)}
 .palp-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0}
 .palp-row.winner .palp-av{box-shadow:0 0 0 2px rgba(201,168,76,.5)}
-.palp-name{font-weight:600;font-size:13px;flex:1;min-width:80px}
+.palp-name{font-weight:600;font-size:13px;flex:1;min-width:80px;display:flex;align-items:center;gap:4px;overflow:hidden}
+.palp-name-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .palp-row.winner .palp-name{font-weight:800;color:#7a5c10}
 .palp-sc{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue);letter-spacing:2px}
 .palp-row.winner .palp-sc{color:#8a6a1f}
@@ -331,7 +332,7 @@ header{position:sticky;top:0;z-index:100;
 .t-lost{background:rgba(204,0,0,.06);color:#94a3b8;border:1px solid rgba(204,0,0,.1)}
 .t-pend{background:rgba(107,122,153,.07);color:var(--muted);border:1px solid rgba(107,122,153,.14)}
 .bet-value-chip{font-size:10px;font-weight:700;color:#0a7f44;background:rgba(10,127,68,.08);border:1px solid rgba(10,127,68,.16);border-radius:10px;padding:2px 7px;white-space:nowrap}
-.bet-number-tag{font-size:9px;font-weight:800;color:white;background:var(--blue);border-radius:8px;padding:1px 6px;margin-left:5px;vertical-align:1px}
+.bet-number-tag{font-size:9px;font-weight:800;color:white;background:var(--blue);border-radius:8px;padding:1px 6px;flex-shrink:0;white-space:nowrap}
 .palps-total-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;padding:.625rem .875rem;
   background:linear-gradient(135deg,rgba(0,51,160,.06),rgba(0,51,160,.02));border:1px solid rgba(0,51,160,.12);border-radius:12px;
   font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px}
@@ -1605,7 +1606,7 @@ function mcHtml(m,mode){
       const numberTag=list.length>1?`<span class="bet-number-tag">#${idx+1}</span>`:'';
       return`<div class="palp-row${status===true?' winner':''}">
         <div class="palp-av" style="background:${avColor(p)}">${ini(p)}</div>
-        <div class="palp-name">${p}${numberTag}${status===true?` <span class="palp-trophy">${trophySvg}</span>`:''}</div>
+        <div class="palp-name"><span class="palp-name-txt">${p}</span>${numberTag}${status===true?`<span class="palp-trophy">${trophySvg}</span>`:''}</div>
         <div class="palp-sc">${b}</div>
         <span class="bet-value-chip">R$ ${valor.toLocaleString('pt-BR')}</span>
         ${tagHtml(status)}
@@ -1805,7 +1806,7 @@ function adminBettorRowsHtml(id,matchId,res){
     const winnerStyle=status===true?'background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.3)':'';
     return `<div class="palp-row" id="abr-${rowKey}" style="${winnerStyle}flex-wrap:wrap">
       <div class="palp-av" style="background:${avColor(p)};width:24px;height:24px;font-size:9px">${ini(p)}</div>
-      <span class="palp-name" style="font-size:12.5px">${p}${status===true?` ${trophySvg}`:''}</span>
+      <span class="palp-name" style="font-size:12.5px;min-width:0"><span class="palp-name-txt">${p}</span>${status===true?trophySvg:''}</span>
       <span class="palp-sc" id="abr-score-${rowKey}" style="font-size:18px">${score}</span>
       <span id="abr-edit-${rowKey}" style="display:none;align-items:center;gap:6px">
         <input class="ri" type="number" min="0" max="20" id="abr-eh-${rowKey}" value="${sh}" style="width:34px;height:28px;font-size:14px">
